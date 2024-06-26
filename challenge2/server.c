@@ -1,10 +1,10 @@
-#include <iostream>
-#include <cstring>
+#include <stdio.h>
+#include <string.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
 
-#define PORT 12345
+#define PORT 8000
 #define BUFFER_SIZE 1024
 
 int main() {
@@ -37,7 +37,7 @@ int main() {
         return -1;
     }
 
-    std::cout << "Server listening on port " << PORT << std::endl;
+    printf("Server listening on port %d\n", PORT);
 
     // Accept incoming connection
     if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen)) < 0) {
@@ -47,11 +47,11 @@ int main() {
 
     // Read message from client
     int valread = read(new_socket, buffer, BUFFER_SIZE);
-    std::cout << "Received message: " << buffer << std::endl;
+    printf("Received message: %s\n", buffer);
 
     // Send message back to client
     send(new_socket, hello, strlen(hello), 0);
-    std::cout << "Message sent to client: " << hello << std::endl;
+    printf("Message sent to client: %s\n", hello);
 
     // Close the socket
     close(new_socket);
@@ -59,4 +59,3 @@ int main() {
 
     return 0;
 }
-
